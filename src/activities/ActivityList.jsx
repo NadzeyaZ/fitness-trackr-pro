@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { deleteActivity } from "../api/activities";
-import { useAuth } from "../auth/AuthContext";
+import { NavLink } from "react-router";
+import { useActivities } from "./ActivitiesContext";
 
-export default function ActivityList({ activities, syncActivities }) {
+export default function ActivityList() {
+  const { activities, syncActivities } = useActivities();
   return (
     <ul>
       {activities.map((activity) => (
@@ -16,27 +16,11 @@ export default function ActivityList({ activities, syncActivities }) {
   );
 }
 
-function ActivityListItem({ activity, syncActivities }) {
-  const { token } = useAuth();
-
-  const [error, setError] = useState(null);
-
-  const tryDelete = async () => {
-    setError(null);
-
-    try {
-      await deleteActivity(token, activity.id);
-      syncActivities();
-    } catch (e) {
-      setError(e.message);
-    }
-  };
-
+function ActivityListItem({ activity }) {
+  const { syncActivities } = useActivities();
   return (
     <li>
-      <p>{activity.name}</p>
-      {token && <button onClick={tryDelete}>Delete</button>}
-      {error && <p role="alert">{error}</p>}
+      <NavLink to={`/activities/${activity.id}`}>{activity.name}</NavLink>
     </li>
   );
 }

@@ -55,3 +55,14 @@ export async function deleteActivity(token, id) {
     throw Error(result.message);
   }
 }
+
+export async function getSingleActivity(id) {
+  const response = await fetch(API + "/activities/" + id, {
+    method: "GET",
+  });
+  const result = await response.json();
+  if (!response.ok) {
+    throw Error(result.message);
+  }
+  return result;
+}

@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { createActivity } from "../api/activities";
 import { useAuth } from "../auth/AuthContext";
+import { useActivities } from "./ActivitiesContext";
 
 /** Form for a user to create a new activity with a name and description. */
-export default function ActivityForm({ syncActivities }) {
+export default function ActivityForm() {
+  const { activities, syncActivities } = useActivities();
   const { token } = useAuth();
 
   const [error, setError] = useState(null);
