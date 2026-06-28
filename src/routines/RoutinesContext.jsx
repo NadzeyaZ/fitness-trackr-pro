@@ -3,16 +3,18 @@ import { getRoutines } from "../api/routines";
 const RoutinesContext = createContext();
 
 export function RoutinesProvider({ children }) {
-  const [routines, setRoutines] = useState();
+  const [routines, setRoutines] = useState([]);
+
+  async function syncRoutines() {
+    const data = await getRoutines();
+    setRoutines(data);
+  }
+
   useEffect(() => {
-    async function syncRoutines() {
-      const data = await getRoutines();
-      setRoutines(data);
-    }
     syncRoutines();
   }, []);
 
-  const value = { routines };
+  const value = { routines, syncRoutines };
   return (
     <RoutinesContext.Provider value={value}>
       {children}
