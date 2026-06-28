@@ -3,6 +3,8 @@ import { useRoutines } from "./RoutinesContext";
 import { useEffect, useState } from "react";
 import { deleteRoutine } from "../api/routines";
 import { useAuth } from "../auth/AuthContext";
+import SetsForm from "../sets/SetsForm";
+import SetsList from "../sets/SetsList";
 
 export default function RoutineDetails() {
   const { routines, syncRoutines } = useRoutines();
@@ -11,6 +13,7 @@ export default function RoutineDetails() {
   const navigate = useNavigate();
   const [error, setError] = useState(null);
   const selectedRoutine = routines.find((routine) => routine.id === Number(id));
+  const setsList = selectedRoutine?.sets || [];
   async function handleDelete() {
     try {
       await deleteRoutine(token, id);
@@ -27,6 +30,8 @@ export default function RoutineDetails() {
       <p>{selectedRoutine?.goal}</p>
       {token && <button onClick={handleDelete}>Delete routine</button>}
       {error && <p role="alert">{error}</p>}
+      <SetsList setsList={setsList} />
+      <SetsForm />
     </>
   );
 }
