@@ -6,13 +6,16 @@ import Layout from "./layout/Layout";
 import { AuthProvider } from "./auth/AuthContext";
 import { BrowserRouter } from "react-router";
 import { ActivitiesProvider } from "./activities/ActivitiesContext.jsx";
+import { RoutinesProvider } from "./routines/RoutinesContext.jsx";
 
 createRoot(document.getElementById("root")).render(
-  <ActivitiesProvider>
-    <AuthProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </AuthProvider>
-  </ActivitiesProvider>,
+  <RoutinesProvider>
+    <ActivitiesProvider>
+      <AuthProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </AuthProvider>
+    </ActivitiesProvider>
+  </RoutinesProvider>,
 );
